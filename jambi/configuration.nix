@@ -97,6 +97,16 @@
     extraGroups = [ "networkmanager" "wheel" "docker" ];
   };
 
+  security.doas.enable = true;
+  security.sudo.enable = false;
+  security.doas.extraRules = [{
+      users = [ "user" ];
+      keepEnv = true;
+      persist = true;
+  }];
+
+
+
   home-manager.users.user = { pkgs, ...	}: {
 	home.packages = [
 		pkgs.firefox 
@@ -112,9 +122,10 @@
 	programs.bash = {
 		enable = true;
 		shellAliases = {
-			"nors" = "sudo nixos-rebuild switch -j 8";
-			"open-config" = "sudo vim /etc/nixos/configuration.nix";
-			"pubip" = "curl checkip.amazonaws.com";
+			"nors" = "nixos-rebuild switch -j 8";
+			"open-config" = "vim /etc/nixos/configuration.nix";
+                        "pubip" = "curl checkip.amazonaws.com";
+                        "download" = "curl -LJO";
 		};
 	};
 	home.stateVersion = "22.11";
@@ -132,7 +143,10 @@
 		settings = {
 			number = true;
 		};
-	};
+        };
+        programs.firefox = {
+                  enable = true;
+        };
   };
 
   # Allow unfree packages
@@ -155,10 +169,21 @@
   #   enableSSHSupport = true;
   # };
 
+
+  # The garbage collector man does not get paid for this.
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
+  };
+
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  
+  # Enable flatpak (bloat)
+  services.flatpak.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
