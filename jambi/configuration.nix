@@ -122,8 +122,8 @@
 	programs.bash = {
 		enable = true;
 		shellAliases = {
-			"nors" = "nixos-rebuild switch -j 8";
-			"open-config" = "vim /etc/nixos/configuration.nix";
+			"nors" = "doas nixos-rebuild switch -j 8";
+			"open-config" = "doas vim /etc/nixos/configuration.nix";
                         "pubip" = "curl checkip.amazonaws.com";
                         "download" = "curl -LJO";
 		};
