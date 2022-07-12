@@ -138,7 +138,7 @@
                 };
         };
         home.stateVersion = "22.11";
-        nixpkgs.config = import /etc/nixos/nixpkgs.nix;
+        nixpkgs.config = import /etc/nixos/extras/nixpkgs.nix;
         programs.git = {
                 enable = true;
                 userName = "Odyssey346";
