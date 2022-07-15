@@ -102,16 +102,16 @@
       persist = true;
   }];
 
-  home-manager.users.user = { pkgs, ... }: {
-        home.packages = [
-                pkgs.firefox 
-                pkgs.kate 
-                pkgs.thunderbird 
-                pkgs.nheko 
-                pkgs.vscode 
-                pkgs.discord-canary 
-                pkgs.syncthing 
-                pkgs.termius 
+  home-manager.users.user = { pkgs, ...	}: {
+	home.packages = [
+		pkgs.firefox 
+		pkgs.kate 
+		pkgs.thunderbird 
+		pkgs.nheko 
+		pkgs.vscode 
+		pkgs.discord-canary 
+		pkgs.syncthing 
+		pkgs.termius 
                 pkgs.tor-browser-bundle-bin
                 pkgs.ark
                 pkgs.discover
@@ -126,32 +126,35 @@
                 pkgs.simplescreenrecorder
                 pkgs.kdenlive
                 pkgs.vlc
-        ];
-        programs.bash = {
-                enable = true;
-                shellAliases = {
-                        "nors" = "doas nixos-rebuild switch -j 8";
-                        "open-config" = "doas vim /etc/nixos/configuration.nix";
+                pkgs.keepassxc
+                pkgs.asciinema
+                pkgs.minetest
+	];
+	programs.bash = {
+		enable = true;
+		shellAliases = {
+			"nors" = "doas nixos-rebuild switch -j 8";
+			"open-config" = "doas vim /etc/nixos/";
                   "pubip" = "curl checkip.amazonaws.com";
                   "download" = "curl -LJO";
                   "spicetify" = "spicetify-cli";
-                };
-        };
-        home.stateVersion = "22.11";
-        nixpkgs.config = import /etc/nixos/extra/nixpkgs.nix;
-        programs.git = {
-                enable = true;
-                userName = "Odyssey346";
-                userEmail = "odyssey346@disroot.org";
-        };
-        programs.vim = {
-                enable = true;
-                plugins = with pkgs.vimPlugins; [
-                        vim-airline
-                ];
-                settings = {
-                        number = true;
-                };
+		};
+	};
+	home.stateVersion = "22.11";
+	nixpkgs.config = import /etc/nixos/extras/nixpkgs.nix;
+	programs.git = {
+		enable = true;
+		userName = "Odyssey346";
+		userEmail = "odyssey346@disroot.org";
+	};
+	programs.vim = {
+		enable = true;
+		plugins = with pkgs.vimPlugins; [
+			vim-airline
+		];
+		settings = {
+			number = true;
+		};
         };
         programs.firefox = {
                   enable = true;
@@ -180,6 +183,7 @@
     mullvad-vpn
     python39Full
     python39Packages.pip
+    htop
   ];
   
   fonts.fonts = with pkgs; [
@@ -187,6 +191,8 @@
       (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   ];
 
+  
+  programs.gamemode.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -211,7 +217,9 @@
   
   # Enable flatpak (bloat)
   services.flatpak.enable = true;
-
+  
+  # Mullvad best vpn 2022 privacy antimalware
+  services.mullvad-vpn.enable = true;
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
